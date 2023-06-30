@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.staticfile.org/pako/1.0.10/pako.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <textarea id="input" rows="12" cols="56"></textarea>
+    <p>result :</p><p id="result"></p>
+    <button id="encode">encode</button>
+    <button id="decode">decode</button>
+    <script>
+    function unzip(b64Data) {
+        let strData = atob(b64Data);
+        const charData = strData.split('').map(function (x) {
+            return x.charCodeAt(0);
+        });
+        const binData = new Uint8Array(charData);
+        const data = pako.inflate(binData);
+        const array = new Uint16Array(data);
+        let result = '';
+        let i = 0;
+        const maxRange = 8 * 1024;
+        for (i = 0; i < array.length / maxRange; i++) {
+            result += String.fromCharCode.apply(null, array.slice(i * maxRange, (i + 1) * maxRange));
+        }
+        result += String.fromCharCode.apply(null, array.slice(i * maxRange));
+        result = decodeURIComponent(result);
+        result = atob(result)
+        result = result.split('').map(function (x) {
+            const res = x.charCodeAt(0)
+            return res === 255 ? -1 : res;
+        });
+        return result
+    }
+    function zip(str) {
+        const binaryString = pako.gzip(encodeURIComponent(str), {to: 'string'})
+        return btoa(binaryString);
+    }
+    function unziptext(e){
+        var input = document.getElementById('input').value
+        var result = unzip(input)
+        document.getElementById('result').innerText = result
+    }
+    function ziptext(e){
+        var input = document.getElementById('input').value
+        var result = zip(input)
+        document.getElementById('result').innerText = result
+    }
+    var decodebtn = document.getElementById('decode')
+    var encodebtn = document.getElementById('encode')
+    decodebtn.addEventListener('click', unziptext)
+    encodebtn.addEventListener('click', ziptext)
+    </script>
+</body>
+</html>
