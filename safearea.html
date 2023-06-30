@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Document</title>
+    <style>
+        html{
+            margin: env(safe-area-inset);
+            padding: env(safe-area-inset);
+        }
+        html, body {
+            height: 100vh;
+            width: 100vw;
+            margin: 0;
+            box-sizing: border-box;
+            padding: 0;
+            /* overflow: hidden; */
+        }
+        /* img{
+            margin: env(safe-area-inset);
+            object-fit: cover;
+        } */
+        #main {
+            width: calc(100vw + env(safe-area-inset));
+            height: 100%;
+            background-image: url("./photo-1586179674767-b6a5a00f3c6f.jpeg");
+            background-position: center;
+            background-size: cover;
+            margin: env(safe-area-inset);
+            position: fixed;
+            /* left: env(safe-area-inset-left); */
+            left: 0px;
+            top: env(safe-area-inset-top);
+            right: env(safe-area-inset-right);
+            bottom: env(safe-area-inset-bottom);
+        }
+    </style>
+</head>
+<body>
+    <!-- <img src="https://images.unsplash.com/photo-1586179674767-b6a5a00f3c6f?ixlib=rb-1.2.1&q=85&fm=jpg&crop=entropy&cs=srgb&ixid=eyJhcHBfaWQiOjE0NTg5fQ" alt=""> -->
+    <div id="main"></div>
+    <button onclick="fullscreen">fullscreen</button>
+    <script>
+        function fullscreen(e) {
+            e.target.request
+        }
+    </script>
+    <script src="./createLinks.js"></script>
+</body>
+</html>
